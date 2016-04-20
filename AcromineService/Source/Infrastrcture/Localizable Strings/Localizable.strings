@@ -1,0 +1,13 @@
+// Localizable.strings
+// Created by WELLINGTON BARBOSA on 4/19/16.
+//
+
+/* AlertController */
+"alertcontroller.action.ok" = "Ok";
+"alertcontroller.title.searchacronym" = "Type the Acronym to search!";
+"alertcontroller.title.error" = "Error";
+"alertcontroller.message.noacronymfound" = "No Acronym found!";
+"alertcontroller.message.requestfailure" = "Request Failure!";
+
+/* MBProgressHUD */
+"mbprogresshud.label" = "Loading...";
