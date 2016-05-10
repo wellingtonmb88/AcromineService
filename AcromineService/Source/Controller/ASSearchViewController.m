@@ -20,16 +20,35 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) ASAcronymManager *manager;
 @property (strong, nonatomic) ASAcronym *acronymRetrieved;
+@property (strong, nonatomic) IBOutlet UISearchController *searchController;
 
 @end
 
-@implementation ASSearchViewController 
+@implementation ASSearchViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // Search controller
+    _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    _searchController.delegate = self;
+    _searchController.searchBar.delegate = self;
+    _searchController.searchBar.placeholder = NSLocalizedString(@"alertcontroller.title.searchacronym", @"Search Acronym");
     
-    if (_acronymRetrieved == nil) {
-        [self searchAcronym:nil];
+    _searchController.hidesNavigationBarDuringPresentation = false;
+    _searchController.dimsBackgroundDuringPresentation = false;
+    
+    // Add the search bar
+    self.definesPresentationContext = NO;
+    [_searchController.searchBar sizeToFit];
+    
+    self.navigationItem.titleView = _searchController.searchBar;
+ 
+}
+
+#pragma mark - UISearchBarDelegate
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    if(searchBar.text != nil && [searchBar.text length] > 0){
+        [self searchWithAcronym:searchBar.text];
     }
 }
 
@@ -78,34 +97,6 @@
         [strongSelf hideProgress];
         
     }];
-}
-
-- (IBAction)searchAcronym:(id)sender {
-    
-    UIAlertController *alertController = [UIAlertController createAndShowAlertWithTitle:NSLocalizedString(@"alertcontroller.title.searchacronym", @"Type the Acronym to search!") withMessage:nil hasDefaultAction:NO];
-    
-    typeof(self) __weak __block weakSelf = self;
-    
-    UIAlertAction *okAction = [UIAlertAction
-                               actionWithTitle:NSLocalizedString(@"alertcontroller.action.ok", @"OK")
-                               style:UIAlertActionStyleDefault
-                               handler:^(UIAlertAction *action){
-                                   
-                                   __strong typeof(weakSelf) strongSelf = weakSelf;
-                                   if (!strongSelf) {
-                                       return ;
-                                   }
-                                   
-                                   NSString *textSearch = [[[alertController textFields]objectAtIndex:0] text];
-                                   if(textSearch != nil && [textSearch length] > 0){
-                                       [strongSelf searchWithAcronym:textSearch];
-                                   }
-                               }];
-    
-    [alertController addAction:okAction];
-    [alertController addTextFieldWithConfigurationHandler:nil];
-    
-    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 -(void) createAndShowAlerView:(NSString*) title withMessage:(NSString*)message {

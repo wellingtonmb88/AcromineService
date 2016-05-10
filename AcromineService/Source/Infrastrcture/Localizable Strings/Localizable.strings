@@ -4,7 +4,7 @@
 
 /* AlertController */
 "alertcontroller.action.ok" = "Ok";
-"alertcontroller.title.searchacronym" = "Type the Acronym to search!";
+"alertcontroller.title.searchacronym" = "Search Acronym";
 "alertcontroller.title.error" = "Error";
 "alertcontroller.message.noacronymfound" = "No Acronym found!";
 "alertcontroller.message.requestfailure" = "Request Failure!";
